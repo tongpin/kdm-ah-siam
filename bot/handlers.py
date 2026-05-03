@@ -144,7 +144,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
             save_wiki(wiki)
 
             await update.message.reply_text(
-                text=f"✅ Deleted lesson: {slug}",
+                text="✅ Deleted lesson: {slug}",
                 reply_markup=main_menu(user_id)
             )
         else:
