@@ -1,0 +1,12 @@
+telegram:
+  token: "PUT_YOUR_NEW_BOT_TOKEN_HERE"
+  admin_ids:
+    - 5080768399
+
+web:
+  host: "0.0.0.0"
+  port: 55053
+
+app:
+  mini_app_url: "https://wiki-weld-xi.vercel.app/"
+  data_file: "data/wiki.json"

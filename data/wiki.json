@@ -1,0 +1,57 @@
+{
+  "java": {
+    "title": "☕ Java Server Setup",
+    "category": "setup",
+    "text": "1. Download server.jar\n2. Run: java -Xmx2G -Xms1G -jar server.jar nogui\n3. Open eula.txt and set eula=true\n4. Run server again ✅",
+    "keywords": [
+      "java",
+      "server",
+      "setup",
+      "jar",
+      "eula"
+    ],
+    "aliases": [
+      "how to setup java server",
+      "minecraft java",
+      "server jar"
+    ],
+    "images": [],
+    "videos": []
+  },
+  "bedrock": {
+    "title": "🟩 Bedrock Server Setup",
+    "category": "setup",
+    "text": "1. Download Bedrock Dedicated Server\n2. Extract files\n3. Edit server.properties\n4. Run bedrock_server.exe\nDefault port: UDP 19132",
+    "keywords": [
+      "bedrock",
+      "server",
+      "setup",
+      "19132"
+    ],
+    "aliases": [
+      "minecraft pe",
+      "pocket edition",
+      "bedrock hosting"
+    ],
+    "images": [],
+    "videos": []
+  },
+  "port": {
+    "title": "🌐 Port Forwarding",
+    "category": "network",
+    "text": "Java: TCP 25565\nBedrock: UDP 19132\n\nSteps:\n1. Login router\n2. Find Port Forwarding\n3. Add server local IP\n4. Add port\n5. Save settings",
+    "keywords": [
+      "port",
+      "forward",
+      "network",
+      "router"
+    ],
+    "aliases": [
+      "open port",
+      "portforward",
+      "how to open port"
+    ],
+    "images": [],
+    "videos": []
+  }
+}
