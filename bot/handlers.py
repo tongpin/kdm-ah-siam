@@ -7,7 +7,6 @@ from storage.wiki_storage import load_wiki, save_wiki, search_wiki
 search_mode = set()
 delete_mode = set()
 
-
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
 
@@ -15,8 +14,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         text=(
             "⛏️ <b>Minecraft Khmer Helper</b>\n\n"
             "📚 មេរៀន Minecraft Server ជាភាសាខ្មែរ\n"
-            "🔎 Search guides or open the Mini App below.\n\n"
-            "👇 ជ្រើសរើសមុខងារ:"
+            "🔎 Search guides or open the Mini App below."
         ),
         parse_mode="HTML",
         reply_markup=main_menu(user_id)
@@ -30,6 +28,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = query.from_user.id
     data = query.data
 
+    # Main menu
     if data == "menu":
         await query.edit_message_text(
             text=(
@@ -42,6 +41,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
+    # Search mode
     if data == "search":
         search_mode.add(user_id)
         await query.edit_message_text(
@@ -49,6 +49,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
+    # Admin menu
     if data == "admin":
         if not is_admin(user_id):
             await query.edit_message_text("⛔ Admin only.")
@@ -60,6 +61,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
+    # Admin list lessons
     if data == "admin:list":
         if not is_admin(user_id):
             await query.edit_message_text("⛔ Admin only.")
@@ -71,10 +73,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             text = "📚 No lessons yet."
         else:
             text = "📚 Lessons:\n" + "\n".join(
-                [
-                    f"- {slug}: {lesson.get('title', slug)}"
-                    for slug, lesson in wiki.items()
-                ]
+                [f"- {slug}: {lesson.get('title', slug)}" for slug, lesson in wiki.items()]
             )
 
         await query.edit_message_text(
@@ -83,6 +82,7 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
+    # Admin delete lesson
     if data == "admin:delete":
         if not is_admin(user_id):
             await query.edit_message_text("⛔ Admin only.")
@@ -90,14 +90,11 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         delete_mode.add(user_id)
         await query.edit_message_text(
-            text=(
-                "🗑 Type lesson slug to delete.\n\n"
-                "Example:\n"
-                "java"
-            )
+            text="🗑 Type lesson slug to delete.\n\nExample: java"
         )
         return
 
+    # Show lesson button
     if data.startswith("lesson:"):
         slug = data.split(":", 1)[1]
         wiki = load_wiki()
@@ -111,14 +108,12 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
 
         await query.edit_message_text(
-            text=(
-                f"{lesson.get('title', slug)}\n\n"
-                f"{lesson.get('text', '')}"
-            ),
+            text=f"{lesson.get('title', slug)}\n\n{lesson.get('text', '')}",
             reply_markup=back_menu()
         )
         return
 
+    # Unknown button
     await query.edit_message_text(
         text="❌ Unknown action.",
         reply_markup=back_menu()
@@ -129,6 +124,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_user.id
     text = update.message.text.strip()
 
+    # Delete lesson mode
     if user_id in delete_mode:
         delete_mode.remove(user_id)
 
@@ -144,7 +140,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
             save_wiki(wiki)
 
             await update.message.reply_text(
-                text="✅ Deleted lesson: {slug}",
+                text=f"✅ Deleted lesson: {slug}",
                 reply_markup=main_menu(user_id)
             )
         else:
@@ -155,6 +151,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         return
 
+    # Search mode
     if user_id in search_mode:
         search_mode.remove(user_id)
 
